@@ -2,8 +2,7 @@ export default {
     erroresResponse : [],
     showForm: false,
     stateLogin: false,
-    tokenUser: 'Bearer ',
+    tokenUser: "",
     rolUser: "",
     userName: ""
-
 }

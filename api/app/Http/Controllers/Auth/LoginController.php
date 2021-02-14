@@ -38,15 +38,28 @@ class LoginController extends Controller
 
     public function index(){
         $this->authorizationUser();
-        return ResourceUsers::collection(User::all());
+
+        try{
+            return ResourceUsers::collection(User::all());
+        }catch(Exception $e){
+            $this->saveLog(true, $e->getMessage(), false, true, "errorLog");
+
+            return $this->responseJson("Error al retornar la lista de usuarios.", 500);
+        }
     }
 
     public function indexPublico(){
-        $users = User::select(
-            "id",
-            "name"
-        )->where("rol", "=", User::ROL_USER)->get();
-        return ResourceIndexPublico::collection($users);
+        try{
+            $users = User::select(
+                "id",
+                "name"
+            )->where("rol", "=", User::ROL_USER)->get();
+            return ResourceIndexPublico::collection($users);
+        }catch(Exception $e){
+            $this->saveLog(true, $e->getMessage(), false, true, "errorLog");
+
+            return $this->responseJson("Error al retornar la lista de usuarios.", 500);
+        }
     }
 
     public function updateClave(ChangePassword $request){

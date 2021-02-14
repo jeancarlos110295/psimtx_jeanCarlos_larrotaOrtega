@@ -37,7 +37,7 @@ class ChangePassword extends FormRequest
     {
         $inputs = $this->input();
 
-        if((int)$this->input("identificador") == 0){
+        if($this->input("identificador") == 0){
             $inputs["identificador"] = "";
         }
 

@@ -3,13 +3,14 @@ import VueRouter from 'vue-router'
 
 import paths from './rutas'
 
-function route (path, view, name) {
+function route (path, view, name, meta) {
   return {
     name: name || view,
     path,
     component: (resovle) => import(
       `@/views/${view}.vue`
-    ).then(resovle)
+    ).then(resovle),
+    meta
   }
 }
 
@@ -19,7 +20,13 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: "history",
 
-  routes: paths.map(path => route(path.path, path.view, path.name, path.redirect)).concat([
+  routes: paths.map(path => route(
+    path.path, 
+    path.view, 
+    path.name,
+    path.meta,
+    path.redirect
+  )).concat([
     { path: '*', redirect: '/' }
   ]),
   scrollBehavior (to, from, savedPosition) {

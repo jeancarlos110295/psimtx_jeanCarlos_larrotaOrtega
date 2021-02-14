@@ -26,8 +26,6 @@ export default {
                     name: data.user.UserName
                 })
 
-                axios.defaults.headers.common = {'Authorization': state.tokenUser}
-
                 resolve(response);
             })
             .catch( errorResponse => {
@@ -36,11 +34,23 @@ export default {
         })
     },
 
-    getDataUsuarios({commit , state}, payload){
+    dataUsuarios({commit , state}, payload){
         return new Promise( (resolve , reject) => {
             axios.get('Usuarios/index')
             .then( response => {
                 resolve(response.data.data);
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
+
+    setEstadoUser({commit , state}, payload){ 
+        return new Promise( (resolve , reject) => {
+            axios.post('Usuarios/updateEstado', payload)
+            .then( response => {
+                resolve(response)
             })
             .catch( errorResponse => {
                 reject(errorResponse)

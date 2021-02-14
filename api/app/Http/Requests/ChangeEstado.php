@@ -33,12 +33,14 @@ class ChangeEstado extends FormRequest
     {
         $inputs = $this->input();
 
-        if((int)$this->input("identificador") == 0){
+        if($this->input("identificador") == 0){
             $inputs["identificador"] = "";
         }
 
-        $inputs["identificador"] = (int)$this->input("estado");
-
+        if($this->input("estado") != ""){
+            $inputs["estado"] = (int)$this->input("estado");
+        }
+        
         return $inputs;
     }
 

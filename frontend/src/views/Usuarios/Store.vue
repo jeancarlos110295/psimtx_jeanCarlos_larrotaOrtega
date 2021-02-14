@@ -221,9 +221,6 @@ export default {
             })
         }
         
-        console.log(this.getLoginState)
-        console.log(this.$route.path)
-
         if(this.getLoginState.stateLogin){
             this.$router.push({
                 path : '/'

@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
     setErrorsResponse(state, payload){
         if(payload.accion == "setErrors" || payload.accion == "resetErrors"){
@@ -38,20 +40,30 @@ export default {
     },
 
     setLoginState(state, payload){
+        let token = ""
+
+        if(payload.accion == "localStorage"){
+            token = "Bearer "+payload.token
+        }
+
+        if(payload.accion == "updateState"){
+            token = localStorage.getItem('tokenUser')
+        }
+
         if(payload.accion == "localStorage"){
             state.stateLogin = true
-            state.tokenUser = payload.token
+            state.tokenUser = token
             state.rolUser = payload.rol
             state.userName = payload.name
 
-            localStorage.setItem('tokenUser' , payload.token)
+            localStorage.setItem('tokenUser' , token)
             localStorage.setItem('rolUser' , payload.rol)
             localStorage.setItem('userName' , payload.name)
             localStorage.setItem('stateLogin' , true)
         }
 
         if(payload.accion == "updateState"){
-            state.tokenUser = localStorage.getItem('tokenUser')
+            state.tokenUser += localStorage.getItem('tokenUser')
             state.rolUser = localStorage.getItem('rolUser')
             state.userName = localStorage.getItem('userName')
             state.stateLogin = localStorage.getItem('stateLogin')
@@ -65,5 +77,7 @@ export default {
 
             localStorage.clear()
         }
+
+        axios.defaults.headers.common = {'Authorization': token}
     }
 }

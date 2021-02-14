@@ -8,7 +8,7 @@
                 <v-toolbar-title>
                     <v-btn 
                         text
-                        href="/"
+                        to="/"
                     >
                         pruebaPsicometrix
                     </v-btn>
@@ -28,7 +28,7 @@
                 <v-toolbar-items class="hidden-sm-and-down" v-if="!getLoginState.stateLogin">
                     <v-btn 
                         text
-                        href="/RegistroDeUsuario"
+                        to="/RegistroDeUsuario"
                     >
                         Registrarme
                     </v-btn>
@@ -47,7 +47,7 @@
                 <v-toolbar-items v-if="getLoginState.rol == 'admin'">
                     <v-btn 
                         text
-                        href="/ModuloUsuarios"
+                        to="/ModuloUsuarios"
                     >
                         Usuarios
                     </v-btn>
@@ -56,7 +56,7 @@
 
                     <v-btn 
                         text
-                        href="/"
+                        to="/"
                     >
                         Intereses
                     </v-btn>
@@ -65,12 +65,10 @@
                 </v-toolbar-items>
 
 
-
-
                 <v-toolbar-items class="hidden-sm-and-down" v-if="getLoginState.stateLogin">
                     <v-btn 
                         text
-                        href="/Logout"
+                        to="/Logout"
                     >
                         Cerrar Sesión
                     </v-btn>

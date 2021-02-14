@@ -2,37 +2,61 @@ export default
 [
     {
         path: '*',
-        view: 'http/404'
+        view: 'http/404',
+        meta:{
+            requiresAuth: false
+        }
     },
     {
-      path: '/',
-      view: 'Home'
+        path: '/',
+        view: 'Home',
+        meta:{
+            requiresAuth: true
+        }
     },
     {
         path: '/RegistroDeUsuario',
         name: 'RegistroDeUsuario',
-        view: 'Usuarios/Store'
+        view: 'Usuarios/Store',
+        meta:{
+            requiresAuth: false
+        }
     },
     {
         path: '/Login',
         name: 'Login',
-        view: 'Usuarios/Store'
+        view: 'Usuarios/Store',
+        meta:{
+            requiresAuth: false
+        }
     },
     {
         path: '/Logout',
         name: 'Logout',
-        view: 'Usuarios/Store'
+        view: 'Usuarios/Store',
+        meta:{
+            requiresAuth: false
+        }
     },
     {
         path: '/Administracion',
-        view: 'Usuarios/Admin'
+        view: 'Usuarios/Admin',
+        meta:{
+            requiresAuth: true
+        }
     },
     {
         path: '/Usuario',
-        view: 'Usuarios/User'
+        view: 'Usuarios/User',
+        meta:{
+            requiresAuth: true
+        }
     },
     {
         path: '/ModuloUsuarios',
-        view: 'Usuarios/ModuloUsuarios'
+        view: 'Usuarios/ModuloUsuarios',
+        meta:{
+            requiresAuth: true
+        }
     }
 ]
