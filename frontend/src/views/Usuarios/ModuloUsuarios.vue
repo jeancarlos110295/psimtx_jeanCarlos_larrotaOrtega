@@ -164,14 +164,15 @@ export default {
         dialog: false,
         disabledButtonsDialog: false,
         identificador: "",
-        validacion: true
+        validacion: true,
+        intervalData: null
     }),
     computed: {
         ...mapGetters(['getLoadPeticionesAjax', 'getLoginState'])
     },
     methods: {
         getData(){
-            this.data = []
+            this.data.splice(0, this.data.length)
             this.loading = true
 
             let p = (p) => {
@@ -281,13 +282,26 @@ export default {
                     }
                 break;
             }
-
-            
+        },
+        pausarInterval(){
+            clearInterval(this.intervalData)
         }
     },
     mounted(){
         this.redirecUserRol()
         this.getData()
+
+    },
+    created(){
+        this.intervalData = setInterval(() =>{
+            this.getData()
+        }, 30000)
+    },
+    destoyed(){
+        this.pausarInterval()
+    },
+    beforeDestroy(){
+        this.pausarInterval()
     }
 }
 </script>

@@ -65,6 +65,18 @@
                 </v-toolbar-items>
 
 
+                <v-toolbar-items v-if="getLoginState.rol == 'user'">
+                    <v-btn 
+                        text
+                        to="/UsuarioIntereses"
+                    >
+                        Intereses
+                    </v-btn>
+
+                    <v-divider vertical></v-divider>
+                </v-toolbar-items>
+
+
                 <v-toolbar-items class="hidden-sm-and-down" v-if="getLoginState.stateLogin">
                     <v-btn 
                         text

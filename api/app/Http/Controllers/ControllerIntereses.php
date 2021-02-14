@@ -10,6 +10,7 @@ use App\Traits\trait_helpers;
 use App\Models\RelInteresesUser;
 use App\Http\Requests\RequestInteres;
 use App\Http\Resources\ResourceIntereses;
+use App\Http\Resources\ResourceIndexPublico;
 use App\Http\Requests\RequestInteresesSimilares;
 
 class ControllerIntereses extends Controller
@@ -24,7 +25,28 @@ class ControllerIntereses extends Controller
     public function index(){
         $this->authorizationUser();
 
-        return ResourceIntereses::collection(Intereses::all());
+        try{
+            return ResourceIntereses::collection(Intereses::all());
+        }catch(Exception $e){
+            $this->saveLog(true, $e->getMessage(), false, true, "errorLog");
+
+            return $this->responseJson("Error al retornar la lista de intereses.", 500);
+        }
+    }
+
+    public function indexPublico(){
+        try{
+            $intereses = Intereses::select(
+                'id as identificador',
+                'interes'
+            )->get();
+
+            return ResourceIndexPublico::collection($intereses);
+        }catch(Exception $e){
+            $this->saveLog(true, $e->getMessage(), false, true, "errorLog");
+
+            return $this->responseJson("Error al retornar la lista de intereses.", 500);
+        }
     }
 
     public function view($id){

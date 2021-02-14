@@ -202,7 +202,7 @@ export default {
     },
     methods:{
         getData(){
-            this.data = []
+            this.data.splice(0, this.data.length)
             this.loading = true
 
             let p = (p) => {

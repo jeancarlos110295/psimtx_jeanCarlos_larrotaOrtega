@@ -46,6 +46,18 @@ export default {
         })
     },
 
+    dataUsuariosPublicos({commit , state}, payload){
+        return new Promise( (resolve , reject) => {
+            axios.get('Usuarios/indexPublico')
+            .then( response => {
+                resolve(response.data.data);
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
+
     setEstadoUser({commit , state}, payload){ 
         return new Promise( (resolve , reject) => {
             axios.post('Usuarios/updateEstado', payload)
@@ -73,6 +85,18 @@ export default {
     dataIntereses({commit , state}, payload){
         return new Promise( (resolve , reject) => {
             axios.get('Intereses/index')
+            .then( response => {
+                resolve(response.data.data);
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
+
+    dataInteresesPublico({commit , state}, payload){
+        return new Promise( (resolve , reject) => {
+            axios.get('Intereses/indexPublico')
             .then( response => {
                 resolve(response.data.data);
             })
@@ -126,6 +150,18 @@ export default {
             axios.post('Intereses/delete/'+payload.identificador, {
                 _method : "DELETE"
             })
+            .then( response => {
+                resolve(response)
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
+
+    enviarIntereses({commit , state}, payload){ 
+        return new Promise( (resolve , reject) => {
+            axios.post('Intereses/interesesSimilares', payload)
             .then( response => {
                 resolve(response)
             })

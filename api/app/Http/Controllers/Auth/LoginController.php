@@ -51,8 +51,8 @@ class LoginController extends Controller
     public function indexPublico(){
         try{
             $users = User::select(
-                "id",
-                "name"
+                "id as identificador",
+                "name as nombre"
             )->where("rol", "=", User::ROL_USER)->get();
             return ResourceIndexPublico::collection($users);
         }catch(Exception $e){

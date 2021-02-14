@@ -65,5 +65,12 @@ export default
         meta:{
             requiresAuth: true
         }
+    },
+    {
+        path: '/UsuarioIntereses',
+        view: 'Intereses/ModuloInteresesUsuario',
+        meta:{
+            requiresAuth: true
+        }
     }
 ]

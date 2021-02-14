@@ -29,6 +29,7 @@ Route::prefix('Auth')->group(function(){
 
 Route::prefix("Intereses")->group(function(){
     Route::get('index', [ControllerIntereses::class, "index"]);
+    Route::get('indexPublico', [ControllerIntereses::class, "indexPublico"]);
     Route::get('view/{id}', [ControllerIntereses::class, "view"]);
     Route::post('store', [ControllerIntereses::class, "store"]);
     Route::put('update/{id}', [ControllerIntereses::class, "update"]);

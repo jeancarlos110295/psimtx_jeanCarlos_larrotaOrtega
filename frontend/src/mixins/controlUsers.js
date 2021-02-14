@@ -11,6 +11,13 @@ const controlUsers = {
                     path : '/Usuario'
                 })
             }
+        },
+        redirecAdminRol(){
+            if(this.getLoginState.rol != "user"){
+                this.$router.push({
+                    path : '/Administracion'
+                })
+            }
         }
     }
 }
