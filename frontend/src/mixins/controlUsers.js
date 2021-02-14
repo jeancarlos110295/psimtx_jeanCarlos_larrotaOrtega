@@ -18,6 +18,17 @@ const controlUsers = {
                     path : '/Administracion'
                 })
             }
+        },
+        redirectNoAutenticado(rep){
+            if(typeof rep.response.data.msg === "string"){
+                if(rep.response.data.msg == "No autenticado"){
+                    this.$store.commit('setLoginState', {accion : 'clearSesion'})
+                    
+                    this.$router.push({
+                        path : '/Login'
+                    })
+                }
+            }
         }
     }
 }

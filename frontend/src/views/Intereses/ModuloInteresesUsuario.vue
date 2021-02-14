@@ -174,6 +174,8 @@ export default {
                 this.$store.commit('setErrorsResponse', {accion: "resetErrors"})
             })
             .catch( errorResponse => {
+                this.redirectNoAutenticado(errorResponse)
+
                 this.$store.commit('setErrorsResponse', {accion: "setErrors" , errors : errorResponse})
             })
             .finally(finall => {
@@ -202,6 +204,8 @@ export default {
                 this.$store.commit('setErrorsResponse', {accion: "resetErrors"})
             })
             .catch( errorResponse => {
+                this.redirectNoAutenticado(errorResponse)
+
                 this.$store.commit('setErrorsResponse', {accion: "setErrors" , errors : errorResponse})
             })
             .finally(finall => {
@@ -256,6 +260,8 @@ export default {
                     this.$store.commit('setErrorsResponse', {accion: "resetErrors"})
                 })
                 .catch( errorResponse => {
+                    this.redirectNoAutenticado(errorResponse)
+                    
                     this.$store.commit('setErrorsResponse', {accion: "setErrors" , errors : errorResponse})
                 })
                 .finally(finall => {
