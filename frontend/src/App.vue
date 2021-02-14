@@ -56,7 +56,7 @@
 
                     <v-btn 
                         text
-                        to="/"
+                        to="/ModuloIntereses"
                     >
                         Intereses
                     </v-btn>

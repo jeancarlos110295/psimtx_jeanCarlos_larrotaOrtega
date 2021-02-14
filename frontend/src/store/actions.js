@@ -69,4 +69,70 @@ export default {
             })
         })
     },
+
+    dataIntereses({commit , state}, payload){
+        return new Promise( (resolve , reject) => {
+            axios.get('Intereses/index')
+            .then( response => {
+                resolve(response.data.data);
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
+
+    guardarInteres({commit , state}, payload){ 
+        return new Promise( (resolve , reject) => {
+            axios.post('Intereses/store', payload)
+            .then( response => {
+                resolve(response)
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
+
+    viewInteres({commit , state}, payload){ 
+        return new Promise( (resolve , reject) => {
+            axios.get('Intereses/view/'+payload.identificador)
+            .then( response => {
+                resolve(response.data.data.interes)
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
+
+    actualizarInteres({commit , state}, payload){ 
+        return new Promise( (resolve , reject) => {
+            axios.post('Intereses/update/'+payload.identificador , {
+                _method : "PUT",
+                interes : payload.interes
+            })
+            .then( response => {
+                resolve(response)
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
+
+    eliminarInteres({commit , state}, payload){ 
+        return new Promise( (resolve , reject) => {
+            axios.post('Intereses/delete/'+payload.identificador, {
+                _method : "DELETE"
+            })
+            .then( response => {
+                resolve(response)
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
+
 }

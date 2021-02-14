@@ -9,6 +9,7 @@
             counter
             name="claveUsuario"
             @click:append="showPassword = !showPassword"
+            :disabled="disabledCampos"
         ></v-text-field>
 
         <v-text-field
@@ -21,6 +22,7 @@
             name="confirmarClave"
             @click:append="showPassword = !showPassword"
             v-if="accionVista == 'viewFormRegistro'"
+            :disabled="disabledCampos"
         ></v-text-field>
     </div>
 </template>
@@ -55,6 +57,10 @@ export default {
         accionVista: {
             type: String,
             default: 'viewFormRegistro'
+        },
+        disabledCampos: {
+            type: Boolean,
+            default: false
         }
     }
 }

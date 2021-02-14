@@ -36,7 +36,7 @@
                             color="success"
                             text 
                             @click="cambiarEstado(item.actions.identificador, 1)"
-                            v-if="item.actions.estado == 0"
+                            v-if="item.actions.estado == 0 && item.actions.rol == 'user'"
                         >
                             Bloquear
                         </v-btn>
@@ -45,7 +45,7 @@
                             color="error"
                             text 
                             @click="cambiarEstado(item.actions.identificador, 0)"
-                            v-if="item.actions.estado == 1"
+                            v-if="item.actions.estado == 1 && item.actions.rol == 'user'"
                         >
                             Desbloquear
                         </v-btn>
@@ -77,6 +77,7 @@
                                     >
                                         <CoreCamposPassword
                                             ref="ComponentPassword_2"
+                                            :disabledCampos="disabledButtonsDialog"
                                         ></CoreCamposPassword>
                                     </v-form>
                                 </v-col>
@@ -159,7 +160,6 @@ export default {
             { text: '', value: 'actions', sortable: false }
         ],
         loading: false,
-        options: {},
         data: [],
         dialog: false,
         disabledButtonsDialog: false,
@@ -187,6 +187,18 @@ export default {
                         let dataR = response[i];
 
                         let estadoUser = (dataR.estado == "Bloqueado") ? 1 : 0;
+                        let textRol = ""
+
+                        switch(dataR.perfil){
+                            case "Usuario":
+                                textRol = "user"
+                            break;
+
+                            case "Administrador":
+                                textRol = "admin"
+                            break;
+                        }
+
 
                         let objn = {
                             registro: dataR.registro,
@@ -197,7 +209,8 @@ export default {
                             estado: dataR.estado,
                             actions: {
                                 identificador: dataR.identificador,
-                                estado: estadoUser
+                                estado: estadoUser,
+                                rol: textRol
                             }
                         }
 
@@ -237,6 +250,11 @@ export default {
                 case "showDialog":
                     this.dialog = true
                     this.identificador = id
+                    try{
+                        this.$refs.ComponentPassword_2.resetValidation()
+                    }catch(error){
+
+                    }
                     this.$refs.ComponentPassword_2.resetCampos()
                 break;
 
