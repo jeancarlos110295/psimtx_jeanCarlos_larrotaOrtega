@@ -303,7 +303,7 @@ export default {
             this.getData()
         }, 30000)
     },
-    destoyed(){
+    destroyed(){
         this.pausarInterval()
     },
     beforeDestroy(){
