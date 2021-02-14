@@ -3,8 +3,6 @@
         <center>
             Usuario
         </center>
-
-
     </v-container>
 </template>
 

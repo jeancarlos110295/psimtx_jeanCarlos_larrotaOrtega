@@ -1,0 +1,66 @@
+version: '3'
+
+services: 
+
+  app_laravel_2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: prueba_psicometrix
+    container_name: app_laravel_2
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app_laravel_2
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes: 
+      - ./:/var/www
+      - ./ConfigDockerServer/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks: 
+      - app-network-2
+
+
+  #Nginx Service
+  webserver_2:
+    image: nginx:alpine
+    container_name: webserver_2
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+        - ./:/var/www
+        - ./ConfigDockerServer/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network-2
+      
+  
+  db_2:
+    volumes:
+      - dbdata_2:/var/lib/mysql
+      - ./ConfigDockerServer/mysql/my.cnf:/etc/mysql/my.cnf
+    image: mysql:5.7.22
+    container_name: db_2
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: DBase
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app-network-2
+  
+#Volumes
+volumes:
+  dbdata_2:
+    driver: local
+
+#Docker Networks
+networks:
+  app-network-2:
+    driver: bridge

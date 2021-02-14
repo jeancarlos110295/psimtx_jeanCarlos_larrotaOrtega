@@ -6,10 +6,7 @@ workspace.code-workspace
 /api/storage/*.key
 /api/vendor
 /api/.env
-/api/ConfigDockerServer
 /api/logsServerApache
-/api/docker-compose.yml
-/api/Dockerfile
 /api/Documentacion/
 
 

@@ -1,6 +1,6 @@
-Requerimientos:
+# Requerimientos:
 
-La aplicación debe estar compuesta por 3 Capas:
+## La aplicación debe estar compuesta por 3 Capas:
 
     1. Capa de usuario (Front-end): Puede usar Vue, React, AngularJs (Preferiblemente pero no es limitante).
 
@@ -8,7 +8,7 @@ La aplicación debe estar compuesta por 3 Capas:
 
     3. Capa de Datos: Mysql (Solo Base datos relacional).
 
-La prueba consiste en una aplicación que contenga las siguientes funcionalidades:
+## La prueba consiste en una aplicación que contenga las siguientes funcionalidades:
 
     1. Un Login de usuario con 2 perfiles: 1 de usuario común y otro de administrador.
 
@@ -35,9 +35,14 @@ La prueba consiste en una aplicación que contenga las siguientes funcionalidade
     9. La vista administradora debe mostrar los usuarios registrados y poder cambiar su clave de acceso u bloquear.
 
 
-Instalacion de la API:
-    Ejecutar los siguientes comandos artisan:
+## Instalacion de la API: (Ejecutar los siguientes comandos artisan)
+***
     - php artisan optimize
     - php artisan migrate
     - php artisan passport:install
     - php artisan db:seed
+
+## Instalacion del Frontend:
+    - npm install
+    - npm run serve
+    
