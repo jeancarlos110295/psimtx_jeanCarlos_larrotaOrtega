@@ -143,7 +143,8 @@ export default {
         interesesSeleccionados: [],
         listadoUsuarios: [],
         resultadoSimilares: [],
-        flagProressCircular: false
+        flagProressCircular: false,
+        intervalData: null
     }),
     computed: {
         returnResultaSimi(){
@@ -268,12 +269,26 @@ export default {
                     this.flagProressCircular = false
                 })
             }
+        },
+        pausarInterval(){
+            clearInterval(this.intervalData)
         }
     },
     mounted(){
         this.redirecAdminRol()
         this.getData()
         this.getUsuarios()
+    },
+    created(){
+        this.intervalData = setInterval(() =>{
+            this.getUsuarios()
+        }, 30000)
+    },
+    destroyed(){
+        this.pausarInterval()
+    },
+    beforeDestroy(){
+        this.pausarInterval()
     }
 }
 </script>
