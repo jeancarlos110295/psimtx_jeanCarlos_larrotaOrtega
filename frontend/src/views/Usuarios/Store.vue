@@ -41,28 +41,10 @@
                         name="correoUsuario"
                     ></v-text-field>
 
-                    <v-text-field
-                        v-model="password"
-                        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                        :rules="passwordReglas"
-                        :type="showPassword ? 'text' : 'password'"
-                        label="Clave"
-                        counter
-                        name="claveUsuario"
-                        @click:append="showPassword = !showPassword"
-                    ></v-text-field>
-
-                    <v-text-field
-                        v-model="passwordConfirm"
-                        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                        :rules="passwordConfirmReglas"
-                        :type="showPassword ? 'text' : 'password'"
-                        label="Confirmar Clave"
-                        counter
-                        name="confirmarClave"
-                        @click:append="showPassword = !showPassword"
-                        v-if="accionVista() == 'viewFormRegistro'"
-                    ></v-text-field>
+                    <CoreCamposPassword 
+                        :accionVista="accionVista()"
+                        ref="ComponentPassword_1"
+                    ></CoreCamposPassword>
 
                     <v-btn
                         :disabled="!validacion"
@@ -92,7 +74,6 @@
 
 
         <CoreLoading v-if="getLoadPeticionesAjax"></CoreLoading>
-
     </v-container>
 </template>
 
@@ -101,6 +82,8 @@
 import { mapGetters, mapState, Store } from 'vuex'
 
 export default {
+    //mixins: [],
+
     name: 'Store',  
     //mixins: [],
     data: () => ({
@@ -115,24 +98,9 @@ export default {
             v => !!v || 'El campo Correo es requerido.',
             v => /.+@.+\..+/.test(v) || 'Correo invalido',
         ],
-
-        showPassword: false,
-        password: '',
-        passwordConfirm: '',
-        passwordReglas: [
-            v => !!v || 'El campo Clave es requerido.',
-            v => /^([A-Za-z\d\*\.\#\?\¿]){6,16}$/i.test(v) || 'Clave incorrecta, debe contener minimo 6 caracteres y no más de 16, los caracteres permitidos son (*.#?¿).'
-        ],
         pathRuta: ''
     }),
     computed:{
-        passwordConfirmReglas(){
-            return [
-                !!this.passwordConfirm || 'El campo Confirmación de Clave es requerido.',
-                this.passwordConfirm === this.password || "Las Claves no coinciden."
-            ]
-        },
-
         ...mapGetters(['getLoadPeticionesAjax', 'getLoginState'])
     },
     methods: {
@@ -148,18 +116,18 @@ export default {
             }
         },
         resetFormulario(){
-            this.password = ''
-            this.passwordConfirm = ''
+            this.$refs.ComponentPassword_1.password = ''
+            this.$refs.ComponentPassword_1.passwordConfirm = ''
             this.correo = ''
             this.nombreUsuario = ''
         },
-        registrarUsuario () {
+        registrarUsuario () { 
             if(this.$refs.formularioRegistroUsuario.validate()){
                 this.$store.commit('setLoadPeticionesAjax', {accion : 'show'});
 
                 this.$store.dispatch('registrarUsuario', {
-                    password : this.password,
-                    password_confirmation : this.passwordConfirm,
+                    password : this.$refs.ComponentPassword_1.password,
+                    password_confirmation : this.$refs.ComponentPassword_1.passwordConfirm,
                     email : this.correo,
                     name : this.nombreUsuario
                 })
@@ -183,7 +151,7 @@ export default {
                 this.$store.commit('setLoadPeticionesAjax', {accion : 'show'});
 
                 this.$store.dispatch('loginUsuario', {
-                    password : this.password,
+                    password : this.$refs.ComponentPassword_1.password,
                     email : this.correo
                 })
                 .then( response => {

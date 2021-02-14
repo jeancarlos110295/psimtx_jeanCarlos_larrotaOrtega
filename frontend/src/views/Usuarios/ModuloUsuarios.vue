@@ -27,7 +27,7 @@
                         <v-btn 
                             color="blue"
                             text 
-                            @click="cambiarClave(item.actions.identificador)"
+                            @click="cambiarClave(item.actions.identificador , 'showDialog')"
                         >
                             Cambiar Clave
                         </v-btn>
@@ -52,6 +52,61 @@
                     </template>>
                 </v-data-table>
             </v-col>
+
+
+            <v-dialog
+                v-model="dialog"
+                persistent
+                max-width="500px"
+            >
+                <v-card>
+                    <v-card-title>
+                        <span class="headline">Cambiar Clave</span>
+                    </v-card-title>
+
+                    <v-card-text>
+                        <v-container>
+                            <v-row>
+                                <v-col
+                                cols="12"
+                                >
+                                    <v-form
+                                        ref="formularioCambioClave"
+                                        v-model="validacion"
+                                        lazy-validation
+                                    >
+                                        <CoreCamposPassword
+                                            ref="ComponentPassword_2"
+                                        ></CoreCamposPassword>
+                                    </v-form>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-card-text>
+                    
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        
+                        <v-btn
+                            color="blue darken-1"
+                            text
+                            @click="dialog = false"
+                            :disabled="disabledButtonsDialog"
+                        >
+                            Cancelar
+                        </v-btn>
+                        
+                        <v-btn
+                            color="success"
+                            text
+                            @click="cambiarClave('' , 'envioRequest')"
+                            :disabled="disabledButtonsDialog"
+                        >
+                            Actualizar Clave
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
 
             <ResponsesErroresHttp></ResponsesErroresHttp>
         </v-row>
@@ -105,7 +160,11 @@ export default {
         ],
         loading: false,
         options: {},
-        data: []
+        data: [],
+        dialog: false,
+        disabledButtonsDialog: false,
+        identificador: "",
+        validacion: true
     }),
     computed: {
         ...mapGetters(['getLoadPeticionesAjax', 'getLoginState'])
@@ -171,6 +230,41 @@ export default {
             })
             .finally(finall => {
             })
+        },
+
+        cambiarClave(id, accion){
+            switch(accion){
+                case "showDialog":
+                    this.dialog = true
+                    this.identificador = id
+                    this.$refs.ComponentPassword_2.resetCampos()
+                break;
+
+                case "envioRequest":
+                    if(this.$refs.formularioCambioClave.validate()){
+                        this.disabledButtonsDialog = true
+                        this.$store.dispatch('updateClaveUsuario', {
+                            identificador: this.identificador,
+                            password : this.$refs.ComponentPassword_2.password,
+                            password_confirmation : this.$refs.ComponentPassword_2.passwordConfirm,
+                        })
+                        .then( response => {
+                            this.disabledButtonsDialog = false
+                            this.$store.commit('setErrorsResponse', {accion: "resetErrors"})
+                        })
+                        .catch( errorResponse => {
+                            this.$store.commit('setErrorsResponse', {accion: "setErrors" , errors : errorResponse})
+                        })
+                        .finally(finall => {
+                            this.dialog = false
+                            this.identificador = ""
+                            this.disabledButtonsDialog = false
+                        })
+                    }
+                break;
+            }
+
+            
         }
     },
     mounted(){

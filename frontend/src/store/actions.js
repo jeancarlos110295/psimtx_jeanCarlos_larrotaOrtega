@@ -56,5 +56,17 @@ export default {
                 reject(errorResponse)
             })
         })
-    }
+    },
+
+    updateClaveUsuario({commit , state}, payload){ 
+        return new Promise( (resolve , reject) => {
+            axios.post('Usuarios/updateClave', payload)
+            .then( response => {
+                resolve(response)
+            })
+            .catch( errorResponse => {
+                reject(errorResponse)
+            })
+        })
+    },
 }
